@@ -1,6 +1,6 @@
 # ubuntu update
 
-cd
+cd /
 apt install -y ca-certificates curl gnupg software-properties-common wget unzip apt-transport-https
 
 # Docker CLI
