@@ -31,8 +31,4 @@ echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.
 
 apt-get update && apt-get install -y kubectl
 
-git clone https://github.com/ahmetb/kubectx /opt/kubectx  \
-    && ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx  \
-    && ln -s /opt/kubectx/kubens /usr/local/bin/kubens
-
 
