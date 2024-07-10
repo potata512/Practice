@@ -21,20 +21,9 @@ unzip awscliv2.zip
 ./aws/install
 
 # Terraform
-apt-get update && apt-get install -y gnupg software-properties-common
-
-wget -O- https://apt.releases.hashicorp.com/gpg | \
-gpg --dearmor | \
-tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null
-
-gpg --no-default-keyring \
---keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg \
---fingerprint
-
-echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
-tee /etc/apt/sources.list.d/hashicorp.list
-
-apt update && apt-get install -y terraform=1.6.6-1
+RUN wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null  \
+    && gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg --fingerprint  \
+    && echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list
 
 # Kubectl
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
@@ -42,7 +31,6 @@ curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | gpg --dearm
 echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /' | tee /etc/apt/sources.list.d/kubernetes.list
 
 apt-get update && apt-get install -y kubectl
-
 # kubens & kubectx
 git clone https://github.com/ahmetb/kubectx /opt/kubectx  \
     && ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx  \
